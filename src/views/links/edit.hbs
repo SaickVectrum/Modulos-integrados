@@ -1,7 +1,8 @@
+<div class="inicio">
 <div class="container p-4">
     <div class="row">
         <div class="col-md-4 mx-auto">
-            <div class="card">
+            <div class="card" style="background-color: #131339; border-radius: 10px">
                 <div class="card-body">
                     <form action="/links/edit/{{link.id}}" method="POST" >
                         
@@ -20,16 +21,15 @@
                             <input type="time"  name="hora" class ="form-control"  >
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-success btn-block">
+                            <button class="btn btn-block" style="background-color: #38b6ff;">
                                 Save
                             </button>
                         </div>
                         
                     </form>
                     <div class="form-group">
-                            <a href="/links" >
-                            <button class="btn btn-block text-white bg-success" >
-                                
+                            <a href="/links" style="text-decoration:none">
+                            <button class="btn btn-block" style="background-color: #38b6ff;" >
                                 Volver
                                 
                             </button>
@@ -39,4 +39,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

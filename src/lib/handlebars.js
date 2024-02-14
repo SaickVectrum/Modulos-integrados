@@ -1,12 +1,19 @@
-//Se trae el metodo format del modulo timeago.js
-const { format } = require('timeago.js');
 
-//Se crea un objeto para poder utilizar timeago desde las vistas
+//Se trae el modulo moment para formatear la fecha y hora
+const moment = require('moment')
+
+//Se crea un objeto para poder utilizar moment desde las vistas
 const helpers = {};
 
-//Cambia la fecha guardada en la base de datos al formato de "timeago" que le indica al usuario de una forma mas intuitiva desde hace cuanto tiempo fue creado el link
-helpers.timeago = (timestamp) => {
-    return format(timestamp);
+//Se formatea la fecha traida de la base de datos para que sea legible para el usuario
+helpers.fechaFormateada = (fechaDesdeBD) => {
+    return moment(fechaDesdeBD).format("DD/MM/YYYY")
+}
+
+//Se formatea la hora traida de la base de datos para que sea legible para el usuario
+helpers.horaFormateada = (horaDesdeBD) => {
+    const momento = moment(horaDesdeBD, 'HH:mm:ss')
+    return momento.format('hh:mm a');
 }
 
 module.exports = helpers;

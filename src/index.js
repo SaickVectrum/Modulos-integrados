@@ -1,5 +1,7 @@
 const express = require('express');
+//Morgan permite observas las peticiones que se le hacen al servidor
 const morgan = require('morgan');
+//express-handlebars es el moter de las plantillas handlebars
 const {engine} = require('express-handlebars');
 const path = require('path');
 
@@ -91,7 +93,7 @@ app.use('/links',require('./routes/links'));
 //Public
 //Es a lo unico que el navegador puede acceder 
 //Se le indica a node donde se encuentra la carpeta public
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Starting the server
 //Se enlaza con la configuracion anterior, del puerto del servidor y muestra por consola si se conecta satisfactoriamente

@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #131339;">
   <div class="container">
-    <a class="navbar-brand text-white" >SPA</a>
+    <a class="navbar-brand text-white" style="">SPA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon "></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       {{#if user}}
       <li class="nav-item">
-        <a href="/profile" class="nav-link">Inicio</a>
+        <a href="/profile" class="nav-link" >Inicio</a>
       </li>
       <li class="nav-item">
         <a href="/links" class="nav-link">Citas Agendadas</a>
@@ -21,10 +21,10 @@
       </li>
       {{else}}
       <li class="nav-item">
-        <a href="/signin" class="nav-link">Iniciar Sesión</a>
+        <a href="/signin" class="nav-link " >Iniciar Sesión</a>
       </li>
       <li class="nav-item">
-        <a href="/signup" class="nav-link">Registrarse</a>
+        <a href="/signup" class="nav-link ">Registrarse</a>
       </li>
       {{/if}}
     </ul>
