@@ -1,0 +1,33 @@
+
+<div class="container p-4">
+    <div class="row">
+        {{!--Por cada link crea un div con la respectiva informacion del link--}}
+        {{#each links}}
+            <div class = "col-md-3">
+                <div class = "card text-center" style="background-color: #131339; border-radius: 10px">
+                    <div class="card-body">
+                        
+                            <h3 class="card-title text-white">
+                                {{title}}
+                            </h3>
+                        
+                        <p class="text-white">Para el dia: {{fechaFormateada fecha}}</p>
+                        <p class="text-white">A las: {{horaFormateada hora}}</p>
+                       
+                        <a href="/links/delete/{{id}}" class="btn btn-danger">Cancelar Cita</a>
+                        <a href="/links/edit/{{id}}" class="btn btn-secondary">Editar cita</a>
+                    </div>
+                </div>
+            </div>
+        {{!--En caso de que no se encuentren citas agendadas, se muestra un mensaje de que no hay citas agendadas--}}
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center" style="background-color: #131339; border-radius: 10px">
+                    <p class="text-white">No hay citas agendadas.</p>
+                    <a href="/links/add">Agenda Una!</a>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+</div>

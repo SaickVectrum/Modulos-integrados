@@ -1,7 +1,7 @@
 --Es la sintaxis para crear la base de datos en MySQL
-CREATE DATABASE database_users;
+CREATE DATABASE database_rolestest;
 
-USE database_users;
+USE database_rolestest;
 
 --Tabla de usuarios
 CREATE TABLE users(
@@ -9,7 +9,8 @@ CREATE TABLE users(
     username VARCHAR(100) NOT NULL,
     password VARCHAR(60) NOT NULL,
     fullname VARCHAR(100) NOT NULL,
-    phone BIGINT(100) NOT NULL
+    phone BIGINT(100) NOT NULL,
+    role VARCHAR(100) DEFAULT 'regular'
 );
 
 ALTER TABLE users

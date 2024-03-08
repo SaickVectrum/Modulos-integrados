@@ -18,10 +18,11 @@
                             <input type="tel" name="phone" placeholder="Numero Celular" class="form-control">
                         </div>
                         <div class="form-group">
-                            <input type="password" name="password" placeholder="Contraseña" class="form-control">
+                            <p id="passwordError" style="color: red;"></p>
+                            <input type="password" name="password" placeholder="Contraseña" class="form-control" id="password">
                         </div>
                         <div class="form-group">
-                            <button class="btn  btn-block" style="background-color: #38b6ff;">
+                            <button class="btn  btn-block" style="background-color: #38b6ff;" onclick="validatePassword()">
                                 Crear Usuario
                             </button>
                         </div>
@@ -32,3 +33,4 @@
     </div>
 </div>
 </div>
+

@@ -16,6 +16,11 @@ const passport = require('passport');
 
 const { database } = require('./keys');
 
+const {config} = require('dotenv');
+config();
+const { PORT } = require('./config');
+
+const pool = require('./database');
 //initializations
 //Se inicia la conexion a la base de datos y del framework express
 const app = express();
@@ -47,7 +52,7 @@ app.set('view engine','.hbs')
 //Se configura la sesion 
 app.use(session({
     //El secret es de como se va a llamar la sesion para guardarla
-    secret: 'faztmysqlnodemysql',
+    secret: process.env.SESSION_SECRET || 'defaultSesion',
     //Se pone en false para que no se renueve la sesion a cada momento
     resave: false,
     //Se pone en false para que no se vuelva a establecer la sesion en cada momento
@@ -69,6 +74,29 @@ app.use(passport.initialize());
 //Se le indica que va a manejar los datos recibidos con la sesion
 app.use(passport.session());
 
+// // Middleware de autenticación que carga datos del usuario desde la base de datos
+// const loadUserMiddleware = async (req, res, next) => {
+//     try {
+//       // Lógica para cargar datos del usuario desde la base de datos (usando MySQL)
+//       const userId = req.session.userId; // Supongamos que tienes el ID del usuario en la sesión
+//       const userData = await pool.query('SELECT * FROM users WHERE id = ?', [userId]);
+  
+//       if (userData.length > 0) {
+//         res.locals.user = userData[0];
+        
+//       } else {
+//         res.locals.user = null;
+//       }
+//     } catch (error) {
+//       console.error('Error al cargar datos del usuario:', error);
+//       res.locals.user = null;
+//     }
+  
+//     next();
+//   };
+  
+//   // Agregar el middleware a la aplicación
+//   app.use(loadUserMiddleware);
 
 //Global variables
 app.use((req,res, next) =>{
@@ -97,6 +125,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Starting the server
 //Se enlaza con la configuracion anterior, del puerto del servidor y muestra por consola si se conecta satisfactoriamente
-app.listen(app.get('port'), () => {
-    console.log('Server on port', app.get('port'));
+app.listen(PORT, () => {
+    console.log(`Server on port ${PORT}`);
 })

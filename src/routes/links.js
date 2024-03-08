@@ -7,8 +7,10 @@ const pool = require('../database');
 //Se traen los metodos para proteger las rutas
 const {isLoggedIn} = require('../lib/auth');
 
+const {checkRole} = require('../lib/role')
+
 //Renderiza el handlebar con la extension "links/add" cuando el usuario se ubica sobre esta
-router.get('/add', isLoggedIn, (req, res) => {
+router.get('/add', isLoggedIn,  (req, res) => {
     res.render('links/add');
 })
 
@@ -37,6 +39,19 @@ router.get('/', isLoggedIn, async (req, res) =>{
     res.render('links/list', { links } )
 });
 
+//Renderiza todos los links guardados por el usuario
+router.get('/listadmin', isLoggedIn, async (req, res) =>{
+    {/**Envia una consulta a la base de datos de acuerdo al id del usuario que tenga la sesión*/}
+    const links = await pool.query('SELECT * FROM links');
+    res.render('links/listadmin', { links } )
+});
+
+router.get('/viewusers', isLoggedIn, async (req, res) =>{
+    {/**Envia una consulta a la base de datos de acuerdo al id del usuario que tenga la sesión*/}
+    const users = await pool.query('SELECT * FROM users WHERE id > 1');
+    res.render('links/viewusers', { users } )
+});
+
 //A traves de la ruta delete y el id de la cita se elimina la cita de la base de datos
 router.get('/delete/:id', isLoggedIn, async (req, res) =>{
     const { id } = req.params;
@@ -47,6 +62,14 @@ router.get('/delete/:id', isLoggedIn, async (req, res) =>{
     res.redirect('/links');
 })
 
+router.get('/deleteuser/:id', isLoggedIn, async (req, res) =>{
+    const { id } = req.params;
+    //Envia la peticion a la base de datos para elminar al usuario y citas que tenga agendadas
+    await pool.query('DELETE users, links FROM users LEFT JOIN links ON users.id = links.user_id WHERE ID = ?;', [id]);
+    //Envia un mensaje de correcta eliminacion
+    req.flash('success', 'usuario eliminado');
+    res.redirect('/links/viewusers');
+})
 //A traves de la ruta edit y el id de la cita se envia al usuario, a la vista edit para poder editar o actualizar la cita.
 router.get('/edit/:id', isLoggedIn, async (req, res) =>{
     const { id } = req.params;

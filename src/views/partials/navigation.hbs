@@ -7,7 +7,22 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       {{#if user}}
+      {{#ifadmin user}}
+          <li class="nav-item">
+        <a href="/adminprofile" class="nav-link" >Inicio</a>
+      </li>
       <li class="nav-item">
+        <a href="/links/listadmin" class="nav-link">Citas Agendadas</a>
+      </li>
+      <li class="nav-item">
+        <a href="/links/add" class="nav-link">Agendar Citas</a>
+      </li>
+      <li class="nav-item">
+        <a href="/logout" class="nav-link">Cerrar Sesion</a>
+      </li>
+      
+        {{else}}
+          <li class="nav-item">
         <a href="/profile" class="nav-link" >Inicio</a>
       </li>
       <li class="nav-item">
@@ -19,6 +34,7 @@
       <li class="nav-item">
         <a href="/logout" class="nav-link">Cerrar Sesion</a>
       </li>
+        {{/ifadmin}}
       {{else}}
       <li class="nav-item">
         <a href="/signin" class="nav-link " >Iniciar Sesión</a>

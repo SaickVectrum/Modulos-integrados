@@ -1,0 +1,33 @@
+
+<div class="container p-4">
+    <div class="row">
+        {{!--Por cada link crea un div con la respectiva informacion del link--}}
+        {{#each users}}
+            <div class = "col-md-3">
+                <div class = "card text-center" style="background-color: #131339; border-radius: 10px">
+                    <div class="card-body">
+                        
+                            <h3 class="card-title text-white">
+                                {{fullname}}
+                            </h3>
+                        
+                        <p class="text-white">{{username}} </p>
+                        <p class="text-white">{{phone}} </p>
+                       
+                        <a href="/links/deleteuser/{{id}}" class="btn btn-danger">Eliminar Usuario</a>
+                        
+                    </div>
+                </div>
+            </div>
+        {{!--En caso de que no se encuentren citas agendadas, se muestra un mensaje de que no hay citas agendadas--}}
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center" style="background-color: #131339; border-radius: 10px">
+                    <p class="text-white">No hay citas agendadas.</p>
+                    <a href="/links/add">Agenda Una!</a>
+                </div>
+            </div>
+        {{/each}}
+
+    </div>
+</div>

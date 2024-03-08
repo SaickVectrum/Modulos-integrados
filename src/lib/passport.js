@@ -25,8 +25,16 @@ passport.use('local.signin', new LocalStrategy({
         //Se comparan las contraseñas para validar el usuario
         const validPassword = await helpers.matchPassword(password, user.password);
         if (validPassword){
+            // Asegurémonos de que req.session.passport esté definido antes de asignar propiedades
+        req.session.passport = req.session.passport || {};
+        req.session.passport.user = {
+          id: user.id,
+          username: user.username,
+          role: user.role || 'regular' // Asignamos el rol del usuario o 'regular' por defecto
+        };
             //Si es correcta la contraseña permite entrar al usuario
             done(null, user, req.flash('success','Welcome ' + user.username))
+            console.log(req.session);
         } else {
             //De lo contrario le indica que la contraseña esta incorrecta
             done(null, false, req.flash('message','Contraseña Incorrecta'))
@@ -36,6 +44,21 @@ passport.use('local.signin', new LocalStrategy({
         return done(null, false, req.flash('message','El usuario no existe'));
     }
 }));
+
+// Función para validar la contraseña
+function validatePassword(password) {
+    const regexLength = /^.{8,}$/;
+    const regexUppercase = /[A-Z]/;
+    const regexLowercase = /[a-z]/;
+    const regexDigit = /\d/;
+    const regexSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+
+    return regexLength.test(password) &&
+        regexUppercase.test(password) &&
+        regexLowercase.test(password) &&
+        regexDigit.test(password) &&
+        regexSpecialChar.test(password);
+}
 
 //Registro
 passport.use('local.signup', new LocalStrategy({
@@ -47,14 +70,25 @@ passport.use('local.signup', new LocalStrategy({
 
 }, async(req, username, password, done) => {
     //Se trae los otros datos que se encuentran en el body a traves de "req"
-    const {fullname} = req.body;
-    const {phone} = req.body;
+    const {fullname, phone} = req.body;
+    
+    // Verificar si es el primer usuario y asignar el rol de administrador
+    const adminCount = await pool.query('SELECT COUNT(*) AS count FROM users WHERE role = "admin"');
+    const isAdmin = adminCount[0].count === 0;
+
+    const isPasswordSecure = validatePassword(password);
+    if (!isPasswordSecure) {
+        return done(null, false, req.flash('message', 'La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.'));
+    }
+
+
     //Se almacenan los datos recibidos
     const newUser = {
         username,
         password,
         fullname, 
-        phone
+        phone,
+        role: isAdmin ? 'admin' : 'regular' // Asignar el rol de administrador si es el primero, de lo contrario, usar el rol proporcionado en el formulario o asignar 'regular' por defecto.
     };
     //Se encripta la contraseña antes de ser enviada a la base de datos
     newUser.password = await helpers.encryptPassword(password);

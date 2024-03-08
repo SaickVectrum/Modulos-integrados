@@ -15,3 +15,6 @@ base de datos y en el local host.
 
 5. Una vez concretada la conexion, en el navegador de preferencia escribir en el buscador "localhost:4000" el cual 
 es el puerto en el que se encuentra el programa.
+
+6. El primer usuario que se registre será considerado como administrador y todos los demás después de este serán 
+considerados como usuarios clientes.
