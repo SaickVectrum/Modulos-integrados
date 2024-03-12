@@ -1,5 +1,5 @@
 //Se trae el modulo de mysql para poder conectarse la base de datos
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 //Este metodo permite que la conexion resista promesas
 const { promisify } = require('util');
